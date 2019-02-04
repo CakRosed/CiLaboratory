@@ -19,17 +19,7 @@ class Welcome extends Frontend_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index(){
-		$data = array(
-			'username' 	=> 'rosidin',
-			'password' 	=> 'anonymouse135',
-			'group' 	=> 'admin',
-			'email' 	=> 'aunur.rosidin@gmail.com'
-		);
-
-		$delete = $this->User_model->delete(5);
-		if ($delete) {
-			echo "sukses";
-		}
+		echo base_url();
 		$this->load->view('welcome_message');
 	}
 }
