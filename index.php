@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -166,6 +166,7 @@ switch (ENVIRONMENT)
  * -------------------------------------------------------------------
  *  CUSTOM CONFIG VALUES
  * -------------------------------------------------------------------
+ *
  * The $assign_to_config array below will be passed dynamically to the
  * config class when initialized. This allows you to set custom config
  * items or override any default config values found in the config.php file.
@@ -177,9 +178,9 @@ switch (ENVIRONMENT)
  */
 	// $assign_to_config['name_of_config_item'] = 'value of config item';
 
-	if (require_once('configuration.php')) {
-		$SConfig = new SConfig;
-	}
+if(require_once('configuration.php')){
+	$SConfig = new SConfig;
+}
 
 
 // --------------------------------------------------------------------
