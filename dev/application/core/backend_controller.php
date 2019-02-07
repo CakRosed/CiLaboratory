@@ -10,6 +10,6 @@ class Backend_Controller extends MY_Controller{
         $this->load->model(array());
 
         $this->site->side       = "backend";
-        $this->site->template   = 'default';
+        $this->site->template   = 'templatevamp';
     }
 } //end controller
