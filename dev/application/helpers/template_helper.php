@@ -14,5 +14,40 @@
         return $_this->site->view($view);
     } //end 
 
+    function set_url($sub){
+        $_this =& get_instance();
+        if ($_this->site->side == "backend") {
+            return site_url('admin/'.$sub);
+        }
+    } //end
+
+    function is_active_page($page, $class){
+        if ($_this->site->side == "backend" && $page == $_this->uri->segment(2)) {
+            return $class;
+        }
+    } //end
+
+    function title(){
+        $_this =& get_instance();
+        global $SConfig;
+        
+        $array_backend_page = array(
+            'dashboard'     => 'Dashboard',
+            'artikel'       => 'Daftar Artikel',
+            'halaman'       => 'Daftar Halaman',
+            'produk'        => 'Daftar produk',
+            'komentar'      => 'Daftar komentar',
+            'statistik'     => 'Statistik',
+            'konfigurasi'   => 'Konfigurasi',
+            'user'          => 'Daftar user'
+        );
+
+        $title = NULL;
+        if ($_this->site->side == "backend" && 
+            (array_key_exists($_this->uri->segment(2), $array_backend_page))) {
+            
+            return $array_backend_page[$_this->uri->segment(2)];
+        }
+    }
 
 ?>
