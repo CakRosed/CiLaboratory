@@ -7,6 +7,7 @@ class MY_Model extends CI_Model{
     protected $_order_by_type;
     protected $_primary_filter = 'intval';
     protected $_primary_key;
+    protected $_type;
     public $rules;
 
     function __construct(){
@@ -35,6 +36,7 @@ class MY_Model extends CI_Model{
         if ($id !== NULL) {
             $filter = $this->_primary_filter;
             $id     = $filter($id);
+            $this->db->where($this->_primary_key, $id);
             $method = 'row';
         }else if($single = TRUE){
             $method = 'row';
@@ -44,16 +46,16 @@ class MY_Model extends CI_Model{
 
         if ($this->_order_by_type) {
             $this->db->order_by($this->_order_by, $this->_order_by_type);
-            // $this->db->order_by('id','DESC');
+            // $this->db->order_by('ID','DESC');
         }else{
             $this->db->order_by($this->_order_by);
         } //end
 
-        return $this->db->get('{PRE}', $this->_table_name)->$method();
+        return $this->db->get('{PRE}'. $this->_table_name)->$method();
     }//end get
 
     public function get_by($where = NULL, $limit = NULL, $offset = NULL, $single = FALSE, $select = NULL){
-        if ($select) {
+        if ($select !== NULL) {
             $this->db->selct($select);
         }
         if ($where) {
@@ -66,7 +68,7 @@ class MY_Model extends CI_Model{
             $this->db->limit($limit);
         }
 
-        return $this->db->get(NULL, $single);
+        return $this->get(NULL, $single);
     } //end get_by
 
     public function delete($id){

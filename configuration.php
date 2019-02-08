@@ -1,7 +1,7 @@
 <?php 
 
     class SConfig{
-        var $_site_url          = "http://localhost/cilaboratory/";
+        var $_site_url          = "http://localhost/CiLaboratory/";
         var $_document_root     = "C:/xampp/htdocs/CiLaboratory/";
         var $_host_name         = "localhost";
         var $_database_name     = "cicms";
