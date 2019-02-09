@@ -22,6 +22,8 @@
     } //end
 
     function is_active_page($page, $class){
+        $_this =& get_instance();
+
         if ($_this->site->side == "backend" && $page == $_this->uri->segment(2)) {
             return $class;
         }

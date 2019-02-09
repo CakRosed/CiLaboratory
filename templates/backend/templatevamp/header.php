@@ -54,21 +54,47 @@
   <div class="subnavbar-inner">
     <div class="container">
       <ul class="mainnav">
-        <li class="active"><a href="index.html"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li><a href="reports.html"><i class="icon-list-alt"></i><span>Reports</span> </a> </li>
-        <li><a href="guidely.html"><i class="icon-facetime-video"></i><span>App Tour</span> </a></li>
-        <li><a href="charts.html"><i class="icon-bar-chart"></i><span>Charts</span> </a> </li>
-        <li><a href="shortcodes.html"><i class="icon-code"></i><span>Shortcodes</span> </a> </li>
-        <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i><span>Drops</span> <b class="caret"></b></a>
+        <li class="<?=is_active_page('dashboard','active');?>"><a href="<?=set_url('dashboard');?>"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+        <li class="dropdown <?=is_active_page('artikel','active');?>"><a href="<?=set_url('artikel/index');?>" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i><span>Artikel</span> <b class="caret"></b></a> 
           <ul class="dropdown-menu">
-            <li><a href="icons.html">Icons</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="pricing.html">Pricing Plans</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="signup.html">Signup</a></li>
-            <li><a href="error.html">404</a></li>
+            <li><a href="<?=set_url('artikel/');?>">Daftar Artikel</a></li>
+            <li><a href="<?=set_url('artikel#tambah');?>">Tambah Artikel</a></li>
+            <li><a href="<?=set_url('artikel/kategori');?>">Kategori</a></li>
           </ul>
         </li>
+        <li class="dropdown <?=is_active_page('halaman','active');?>"><a href="<?=set_url('halaman/index');?>" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-book"></i><span>Halaman</span> <b class="caret"></b></a> 
+          <ul class="dropdown-menu">
+            <li><a href="<?=set_url('halaman');?>">Daftar Halaman</a></li>
+            <li><a href="<?=set_url('halaman#tambah');?>">Tambah Halaman</a></li>            
+          </ul>
+        </li>
+        <li class="dropdown <?=is_active_page('produk','active');?>"><a href="<?=set_url('produk/index');?>" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-shopping-cart"></i><span>Toko Online</span>  <b class="caret"></b></a> 
+          <ul class="dropdown-menu">
+            <li><a href="<?=set_url('produk');?>">Daftar Produk</a></li>
+            <li><a href="<?=set_url('produk#tambah');?>">Tambah Produk</a></li>
+            <li><a href="<?=set_url('produk/kategori');?>">Kategori Produk</a></li>
+            <li><a href="<?=set_url('produk/pesanan');?>">Pesanan</a></li>
+            <li><a href="<?=set_url('produk/konfirmasi');?>">Konfirmasi</a></li>
+          </ul>
+        </li>  
+        <li class="<?=is_active_page('komentar','active');?>"> <a href="<?=set_url('komentar');?>"><i class="icon-comments-alt"></i><span>Komentar</span></a> </li> 
+        <li class="<?=is_active_page('statistik','active');?>"><a href="<?=set_url('statistik');?>"><i class="icon-signal"></i><span>Statistik</span> </a> </li> 
+        <li class="<?=is_active_page('tampilan','active');?>"><a href="<?=set_url('tampilan');?>"><i class="icon-list-alt"></i><span>Tampilan</span></a></li> 
+        <li class="dropdown <?=is_active_page('konfigurasi','active');?>"><a href="<?=set_url('konfigurasi/index');?>" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i><span>Konfigurasi</span>  <b class="caret"></b></a> 
+          <ul class="dropdown-menu" id="menu-konfigurasi">
+            <li><a href="<?=set_url('konfigurasi/#konfigurasi-umum');?>">Konfigurasi Umum</a></li>
+            <li><a href="<?=set_url('konfigurasi/#konfigurasi-konten');?>">Konfigurasi Konten</a></li>
+            <li><a href="<?=set_url('konfigurasi/#konfigurasi-komentar');?>">Konfigurasi Komentar</a></li>
+            <li><a href="<?=set_url('konfigurasi/#konfigurasi-seo');?>">SEO/Webmaster</a></li>
+            <li><a href="<?=set_url('konfigurasi/#konfigurasi-toko-online');?>">Konfigurasi Toko Online</a></li>
+          </ul>
+        </li> 
+        <li class="dropdown <?=is_active_page('user','active');?>"><a href="<?=set_url('user/index');?>" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i><span>User</span> <b class="caret"></b></a> 
+          <ul class="dropdown-menu">
+            <li><a href="<?=set_url('user');?>">Daftar Semua User</a></li>
+            <li><a href="<?=set_url('user#tambah');?>">Tambah User</a></li>
+          </ul>
+        </li>        
       </ul>
     </div>
     <!-- /container --> 
