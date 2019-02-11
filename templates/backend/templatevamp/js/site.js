@@ -5,25 +5,50 @@ $(function () {
 	$(window).hashchange(function () {
 		var hash = $.param.fragment();
 
-		if (hash == "tambah") {
+		if (hash == 'tambah') {
+			if (path.search('admin/artikel') > 0) {
+				$('#myModal .modal-header #myModalLabel').text('Tambah Artikel');
+				$('#myModal .modal-footer #submit-artikel').text('Tambah!');
+				$('#myModal #form-artikel').attr('action', 'tambah');
+			}
 
-		} else if (hash == "edit") {
+			$('#myModal').addClass('big-modal');
+			$('#myModal').modal('show');
+		} else if (hash.search('edit') == 0) {
 
-		} else if (hash == "hapus") {
+			if (path.search('admin/artikel') > 0) {
+				$('#myModal .modal-header #myModalLabel').text('Edit Artikel');
+				$('#myModal .modal-footer #submit-artikel').text('Update!');
+				$('#myModal #form-artikel').attr('action', 'update');
+			}
 
-		} else if (hash == "ambil") {
+			$('#myModal').addClass('big-modal');
+			$('#myModal').modal('show');
+		} else if (hash.search('hapus') == 0) {
+			if (path.search('admin/artikel') > 0) {
+				$('#myModal form').hide();
+				$('#myModal .modal-header #myModalLabel').text('Hapus Artikel');
+				$('#myModal .modal-footer #submit-artikel').text('Hapus Saja!');
+				$('#myModal #form-artikel').attr('action', 'hapus');
+				$('#myModal .modal-body').prepend('<p id="hapus-notif">Apakah Anda yakin akan menghapus : Artikel ... ???</p>');
+			}
 
-		} else if (hash == "mass") {
-
+			$('#myModal').modal('show');
 		}
 
 	});
 
-	$(window).trigger("hashchange");
+	$(window).trigger('hashchange');
 
-	$("#myModal").on("hidden", function () {
+	$('#myModal').on('hidden', function () {
 		window.history.pushState(null, null, path);
+		$('#myModal').removeClass('big-modal');
+		$('#myModal #hapus-notif').remove();
+		$('#myModal form').find("input[type=text], textarea").val("");
+		$('#myModal form').show();
+
 	});
+
 });
 
 var lineChartData = {
@@ -36,4 +61,5 @@ var lineChartData = {
 		data: [2700, 2700, 2900, 2600, 2900]
 	}]
 }
+
 var myLine = new Chart(document.getElementById("area-chart").getContext("2d")).Line(lineChartData);
