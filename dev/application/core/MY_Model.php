@@ -38,7 +38,7 @@ class MY_Model extends CI_Model{
             $id     = $filter($id);
             $this->db->where($this->_primary_key, $id);
             $method = 'row';
-        }else if($single = TRUE){
+        }else if($single == TRUE){
             $method = 'row';
         }else{
             $method = 'result';
@@ -56,7 +56,7 @@ class MY_Model extends CI_Model{
 
     public function get_by($where = NULL, $limit = NULL, $offset = NULL, $single = FALSE, $select = NULL){
         if ($select !== NULL) {
-            $this->db->selct($select);
+            $this->db->select($select);
         }
         if ($where) {
             $this->db->where($where);

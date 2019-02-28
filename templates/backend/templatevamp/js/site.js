@@ -24,6 +24,7 @@ $(function () {
 
 			$('#myModal').addClass('big-modal');
 			$('#myModal').modal('show');
+
 		} else if (hash.search('hapus') == 0) {
 			if (path.search('admin/artikel') > 0) {
 				$('#myModal form').hide();
@@ -46,9 +47,36 @@ $(function () {
 		$('#myModal #hapus-notif').remove();
 		$('#myModal form').find("input[type=text], textarea").val("");
 		$('#myModal form').show();
-
 	});
 
+	/* ************************************** */
+	/*        BACKEND BAGIAN ARTIKEL          */
+	/* ************************************** */
+
+	$(document).on('click', '#submit-artikel', function (eve) {
+		eve.preventDefault(); //menjalankan preintah javascript tanpa mereload atau menjalankan link
+		
+		var action = $("#form-artikel").attr('action');
+		var datatosend = $("#form-artikel").serialize();
+
+		$.ajax('http://' + host + path + '/action/' + action, {
+			dataType: 'json',
+			type: 'POST',
+			data: datatosend,
+			success: function (data) {
+				if (data.status == "success") {
+					$("#myModal").modal('hide');
+					$("div.widget-content").prepend(
+						'<div class="control-group"><div class="alert-info">'+
+						'<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+						'<strong> Artikel telah diperbarui..</strong></div></div>'
+					);
+				}else{ 
+					
+				}
+			}
+		});
+	});
 });
 
 var lineChartData = {

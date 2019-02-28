@@ -10,7 +10,7 @@ class Backend_Controller extends MY_Controller{
         $this->load->model(array());
 
         $this->site->side       = "backend";
-        $this->site->template   = 'templatevamp';
+        $this->site->template   = 'mdb';
 
         $this->site->is_logged_in();
     }

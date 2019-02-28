@@ -4,10 +4,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 Class Artikel extends Backend_Controller{
     function __construct(){
         parent::__construct();
+        $this->load->model(array('Artikel_model'));
     }
 
     function index(){
         $data = array();
         $this->site->view('artikel', $data);
     } //end index
+
+    public function action($param){
+        global $SConfig;
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            if ($param == "tambah") {
+                
+                $rules = $this->Artikel_model->rules;
+                $this->form_validation->set_rules($rules);
+
+                if ($this->form_validation->run() == TRUE) {
+                    $post = $this->input->post(NULL, TRUE);
+                    $data = array(
+                        'post_author'   => get_user_info('ID'),
+                        'post_title'    => $post['post_title'],
+                        'post_name'     => url_title($post['post_title'], '-', TRUE),
+                        'post_content'  => $post['post_content'],
+                        'post_date'     => date('Y-m-d H:i:s') 
+                    );
+
+                    if ($this->Artikel_model->insert($data)) {
+                        $result = array('status' => 'success');
+                    }else{
+                        $result = array('status' => 'failed');
+                    }
+                }else{
+                    $result = array('status' => 'failed', 'errors' => $this->form_validation->error_array());
+                }
+
+                echo json_encode($result);
+                
+            }else if($param == 'ambil'){
+				$post = $this->input->post(NULL,TRUE);
+				$total_rows = $this->Artikel_model->count();
+				$offset = NULL;
+
+				if(!empty($post['hal_aktif']) && $post['hal_aktif'] > 1 ){
+					$offset = ($post['hal_aktif'] - 1) * $SConfig->_backend_perpage ;
+				}
+
+				$record = $this->Artikel_model->get_by(NULL,$SConfig->_backend_perpage, $offset);
+
+				echo json_encode(
+						array(
+								'total_rows' => $total_rows,
+								'perpage' => $SConfig->_backend_perpage,
+								'record' => $record
+							)
+
+					);
+			}
+        }
+    } //end action
+
 } //end controller

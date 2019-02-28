@@ -87,9 +87,9 @@
 		</div>
 		<input type="hidden" name="mass_action_type" id="mass_action_type" />
 		<input type="hidden" name="post_id" id="post_id" />
-		</form>    
+		</form>
 	</div>
-<div class="modal-footer">
+	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
 		<button class="btn btn-primary" id="submit-artikel">Tambah!</button>
 	</div>
