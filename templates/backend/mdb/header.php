@@ -14,6 +14,7 @@
   <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>mdb.min .css" rel="stylesheet">
   <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>mdb.lite.min.css" rel="stylesheet">
   <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery-3.3.1.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </head>
 
 <body class="fixed-sn white-skin grey lighten-4">
