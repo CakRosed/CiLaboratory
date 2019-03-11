@@ -62,12 +62,12 @@
       <div class="modal-body mx-4">  
         <form role="form" id="form-artikel" action="tambah">
         <div class="md-form mb-5">
-          <input type="text" id="post_title" name="post_title" class="form-control validate">
+          <input type="text" id="post_title" value="asdf" name="post_title" class="form-control validate">
           <label data-error="wrong" data-success="right" for="Form-email1">Judul Artikel</label>
         </div>
 
         <div class="md-form pb-3">
-          <textarea type="text" name="post_content" rows="8" id="post_content" class="form-control md-textarea" rows="3"></textarea>
+          <textarea type="text" value="asdf" name="post_content" rows="8" id="post_content" class="form-control md-textarea" rows="3"></textarea>
           <label data-error="wrong" data-success="right" for="post_content">Isi konten</label>
         </div>
 

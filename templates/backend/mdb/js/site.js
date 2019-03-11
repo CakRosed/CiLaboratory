@@ -20,6 +20,9 @@ $(function () {
 
 		if (hash == "tambah") {
 			if (path.search('admin/artikel') > 0) {
+				$('#elegantModalForm .modal-body #post_title').val('');
+				$('#elegantModalForm .modal-body #post_content').val('');
+
 				$('#elegantModalForm .modal-header #myModalLabel').text('Tambah Artikel');
 				$('#elegantModalForm #submit-artikel').text('Tambah');
 				$('#elegantModalForm #form-artikel').attr('action', 'tambah');
@@ -27,10 +30,21 @@ $(function () {
 			$('#elegantModalForm').modal('show');
 
 		} else if (hash.search('edit') == 0) {
+
 			if (path.search('admin/artikel') > 0) {
+				var post_ID = getUrlVars()['id'];
+				var Artikel_detail = getJSON('http://' + host + path + '/action/ambil', {
+					id: post_ID
+				});
+				//value data
+				$('#elegantModalForm .modal-body #post_title').val('' + Artikel_detail.data['post_title']);
+				$('#elegantModalForm .modal-body #post_content').val('' + Artikel_detail.data['post_content']);
+				//opsional modal
 				$('#elegantModalForm .modal-header #myModalLabel').text('Edit Artikel');
 				$('#elegantModalForm #submit-artikel').text('Edit');
 				$('#elegantModalForm #form-artikel').attr('action', 'edit');
+				//trigger
+				$('#elegantModalForm #form-artikel #post_id').val(post_ID);
 			}
 			$('#elegantModalForm').modal('show');
 
@@ -67,6 +81,8 @@ $(function () {
 		$('#elegantModalForm #hapus-notif').remove();
 		$('#elegantModalForm form').show();
 	});
+
+	moment.locale('id');
 
 	/* ************************************** */
 	/*        BACKEND BAGIAN ARTIKEL          */
@@ -175,4 +191,20 @@ function getUrlVars() {
 		vars[hash[0]] = hash[1];
 	}
 	return vars;
+}
+
+function getJSON(url, data) {
+	return JSON.parse(
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data: data,
+			dataType: 'JSON',
+			global: false,
+			async: false,
+			success: function (msg) {
+
+			}
+		}).responseText
+	);
 }
