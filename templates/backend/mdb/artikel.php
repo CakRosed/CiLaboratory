@@ -101,24 +101,10 @@
 
                 <!--Table body-->
                 <tbody>
-                  <!-- <tr>
-                    <th scope="row">
-                      <input class="form-check-input" type="checkbox" id="checkbox1">
-                      <label class="form-check-label" for="checkbox1" class="label-table"></label>
-                    </th>
-                    <td>3 tips efesiensi coding backend menggunakan code igniter</td>
-                    <td><i class="far fa-comment-dots mx-1"></i> 38</td>
-                    <td><i class="far fa-eye mx-1"></i> 103 </td>
-                    <td><i class="far fa-clock mr-1"></i> 3 minggu yang lalu</td>
-                    <td>
-                      <a href="<?= set_url('artikel#hapus?id=1'); ?>">
-                        <button class="btn btn-sm peach-gradient mr-1" data-toggle="modal" data-target="#elegantModalForm"><i class="fas fa-trash"></i></button>
-                      </a>
-                      <a href="<?= set_url('artikel#edit?id=1'); ?>">
-                        <button class="btn btn-sm purple-gradient mr-1" data-toggle="modal" data-target="#elegantModalForm"><i class="fas fa-pencil-alt"></i></button>
-                      </a>
-                    </td>
-                  </tr> -->
+                    <!-- javascript customization -->
+                    <!-- javascript customization -->
+                    <!-- javascript customization -->
+                    <!-- javascript customization -->
                 </tbody>
                 <!--Table body-->
               </table>
@@ -159,5 +145,46 @@
     </div>
   </main>
   <!--Main layout-->
+
+  <!-- Modal -->
+<div class="modal fade" id="elegantModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <!--Content-->
+    <div class="modal-content form-elegant">
+      <!--Header-->
+      <div class="modal-header text-center">
+        <h3 class="modal-title w-100 dark-grey-text font-weight-bold my-3" id="myModalLabel"><strong>Tambah artikel</strong></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Body--> 
+      <div class="modal-body mx-4">  
+        <form role="form" id="form-artikel" action="tambah">
+        <div class="md-form mb-5">
+          <input type="text" id="post_title" value="asdf" name="post_title" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="Form-email1">Judul Artikel</label>
+        </div>
+
+        <div class="md-form pb-3">
+          <textarea type="text" value="asdf" name="post_content" rows="8" id="post_content" class="form-control md-textarea" rows="3"></textarea>
+          <label data-error="wrong" data-success="right" for="post_content">Isi konten</label>
+        </div>
+
+        <input type="hidden" name="mass_action_type" id="mass_action_type" />
+        <input type="hidden" name="post_id" id="post_id" />
+        </form>
+
+        <div class="text-center mb-3">
+          <button type="button" id="submit-artikel" class="btn aqua-gradient btn-block btn-rounded z-depth-1a">Submit</button>
+        </div>
+
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal -->
 
 <?php get_template('footer');

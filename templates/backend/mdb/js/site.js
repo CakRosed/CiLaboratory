@@ -2,43 +2,56 @@ var path = window.location.pathname;
 var host = window.location.hostname;
 
 
+$(document).ready(function () {
+	// Material Select Initialization
+	$('.mdb-select').material_select();
+
+	// Sidenav Initialization
+	$(".button-collapse").sideNav();
+});
+
+
 $(function () {
-
-	$(document).ready(function () {
-		// Material Select Initialization
-		$('.mdb-select').material_select();
-
-		// Sidenav Initialization
-		$(".button-collapse").sideNav();
-	});
-
-
-
 	// Hashchange
 	$(window).hashchange(function () {
 		var hash = $.param.fragment(); //mengambil hash dari browser
-
 		if (hash == "tambah") {
-			if (path.search('admin/artikel') > 0) {
+			if (path.search('admin/artikel/kategori') > 0) {
+				var kategori_artikel = getJSON('http://' + host + path + '/ambil', {});
+				$('#category_parent option').remove();
+				$('#category_parent').append('<option disabled selected value="">Pilih induk kategori</option>');
+				if (kategori_artikel.record) {
+					$.each(kategori_artikel.record, function (key, value) {
+						$('#category_parent').append('<option value="' + value['category_ID'] + '">' + value['category_name'] + '</option>');
+					});
+				}
 				$('#elegantModalForm .modal-body #post_title').val('');
-				$('#elegantModalForm .modal-body #post_content').val('');
+				$('#elegantModalForm .modal-header #myModalLabel').text('Tambah Kategori Artikel');
+				$('#elegantModalForm #submit-kategori-artikel').text('Tambah');
+				$('#elegantModalForm #form-artikel').attr('action', 'tambah');
+
+			} else if (path.search('admin/artikel') > 0) {
+				$('#elegantModalForm .modal-body #post_title').val('');
 
 				$('#elegantModalForm .modal-header #myModalLabel').text('Tambah Artikel');
-				$('#elegantModalForm #submit-artikel').text('Tambah');
+				$('#elegantModalForm #submit-kategori-artikel').text('Tambah');
 				$('#elegantModalForm #form-artikel').attr('action', 'tambah');
 			}
 			$('#elegantModalForm').modal('show');
 
 		} else if (hash.search('edit') == 0) {
-
-			if (path.search('admin/artikel') > 0) {
+			if (path.search('admin/artikel/kategori') > 0) {
+				$('#elegantModalForm .modal-header #myModalLabel').text('Edit Kategori Artikel');
+				$('#elegantModalForm #submit-artikel').text('Edit');
+				$('#elegantModalForm #form-artikel').attr('action', 'edit');
+			} else if (path.search('admin/artikel') > 0) {
 				var post_ID = getUrlVars()['id'];
-				var Artikel_detail = getJSON('http://' + host + path + '/action/ambil', {
+				var artikel_detail = getJSON('http://' + host + path + '/action/ambil', {
 					id: post_ID
 				});
 				//value data
-				$('#elegantModalForm .modal-body #post_title').val('' + Artikel_detail.data['post_title']);
-				$('#elegantModalForm .modal-body #post_content').val('' + Artikel_detail.data['post_content']);
+				$('#elegantModalForm .modal-body #post_title').val('' + artikel_detail.data['post_title']);
+				$('#elegantModalForm .modal-body #post_content').val('' + artikel_detail.data['post_content']);
 				//opsional modal
 				$('#elegantModalForm .modal-header #myModalLabel').text('Edit Artikel');
 				$('#elegantModalForm #submit-artikel').text('Edit');
@@ -49,13 +62,28 @@ $(function () {
 			$('#elegantModalForm').modal('show');
 
 		} else if (hash.search("hapus") == 0) {
-			if (path.search('admin/artikel') > 0) {
+			if (path.search('admin/artikel/kategori') > 0) {
+				var category_ID = getUrlVars()['id'];
+				var category_detail = getJSON('http://' + host + path + '/ambil', {
+					id: category_ID
+				});
+				$('#elegantModalForm form').hide();
+				$('#elegantModalForm #form-kategori-artikel').attr('action', 'hapus');
+				$('#elegantModalForm #myModalLabel').text('Hapus kategori artikel');
+				$('#elegantModalForm #submit-kategori-artikel').text('Hapus saja');
+				$('#elegantModalForm .modal-body').prepend('<p id="hapus-notif">Apakah Anda yakin akan menghapus : Kategori  <b>' + category_detail.data['category_name'] + '</b> ???</p>');
+				$('#elegantModalForm #form-kategori-artikel #category_id').val(category_ID);
+			} else if (path.search('admin/artikel') > 0) {
+				var post_ID = getUrlVars()['id'];
+				var artikel_detail = getJSON('http://' + host + path + '/action/ambil', {
+					id: post_ID
+				});
 				$('#elegantModalForm form').hide();
 				$('#elegantModalForm #myModalLabel').text('Hapus artikel');
 				$('#elegantModalForm #submit-artikel').text('Hapus saja');
 				$('#elegantModalForm #form-artikel').attr('action', 'hapus');
-				$('#elegantModalForm .modal-body').prepend('<p id="hapus-notif">Apakah Anda yakin akan menghapus : Artikel ... ???</p>');
-
+				$('#elegantModalForm .modal-body').prepend('<p id="hapus-notif">Apakah Anda yakin akan menghapus : Artikel  <b>' + artikel_detail.data['post_title'] + '</b> ???</p>');
+				$('#elegantModalForm #form-artikel #post_id').val(post_ID);
 			}
 			$('#elegantModalForm').modal('show');
 		} else if (hash.search("ambil") == 0) {
@@ -102,7 +130,13 @@ $(function () {
 				if (data.status == "success") {
 					ambil_artikel(null, false);
 					$('#elegantModalForm').modal('hide');
-					toastr.success('Sukses! Anda telah menulis artikel kedalam database');
+					if (data.tipe == "insert") {
+						toastr.success('Sukses! Anda telah MENULIS artikel');
+					} else if (data.tipe == "edit") {
+						toastr.success('Sukses! Anda telah MENGUBAH artikel');
+					} else if (data.tipe == "delete") {
+						toastr.success('Sukses! Anda telah MENGHAPUS artikel');
+					}
 				} else {
 					$.each(data.errors, function (key, value) {
 						$('#' + key).attr('placeholder', value);
@@ -113,8 +147,40 @@ $(function () {
 		//end ajax
 	});
 	ambil_artikel(null, false);
-});
 
+	/* ************************************** */
+	/*       BACKEND BAGIAN KATEGORI          */
+	/* ************************************** */
+	$(document).on('click', '#submit-kategori-artikel', function (eve) {
+		eve.preventDefault();
+		var action = $('#form-kategori-artikel').attr('action');
+		$.ajax('http://' + host + path + '/' + action, {
+			dataType: 'JSON',
+			type: 'POST',
+			data: $('#form-kategori-artikel').serialize(),
+			success: function (data) {
+				if (data.status == 'success') {
+					ambil_kategori();
+					$('#elegantModalForm').modal('hide');
+					if (data.tipe == "insert") {
+						toastr.success('Sukses! Anda telah MENAMBAH kategori');
+					} else if (data.tipe == "edit") {
+						toastr.success('Sukses! Anda telah MENGUBAH kategori');
+					} else if (data.tipe == "delete") {
+						toastr.success('Sukses! Anda telah MENGHAPUS kategori');
+					}
+				} else {
+					$.each(data.errors, function (key, value) {
+						$('#' + key).attr('placeholder', value);
+					});
+				}
+			}
+		});
+	});
+
+	// ************* AMBIL KATEGORI (READ)
+	ambil_kategori();
+});
 
 
 
@@ -126,7 +192,7 @@ $(function () {
 function ambil_artikel(hal_aktif, scrolltop) {
 	if ($('table#tbl_artikel').length > 0) {
 		$.ajax('http://' + host + path + '/action/ambil', {
-			dataType: 'json',
+			dataType: 'JSON',
 			type: 'POST',
 			data: {
 				hal_aktif: hal_aktif
@@ -173,6 +239,100 @@ function ambil_artikel(hal_aktif, scrolltop) {
 			}
 		});
 	}
+}
+
+function ambil_kategori() {
+	// jsfiddle.net/LkkwH/1/
+	// http://jsfiddle.net/sw_lasse/9wpHa/
+	var path = window.location.pathname;
+	var host = window.location.hostname;
+	if ($('#list-kategori').length > 0) {
+		$.ajax('http://' + host + path + '/ambil', {
+			dataType: 'JSON',
+			type: 'POST',
+			success: function (data) {
+
+				$('#list-kategori ul').remove();
+
+				var htmlStr = "";
+				var printTree = function (node) {
+
+					htmlStr = htmlStr + '<ul class="list-group hirarki kategori">';
+
+					for (var i = 0; i < node.length; i++) {
+						if (node[i]['children']) var listyle = 'li-parent';
+						else listyle = '';
+						htmlStr = htmlStr + '<li id="ID_' + node[i]['category_ID'] + '" class="list-group-item ' + listyle + '">';
+						htmlStr = htmlStr + '<div class="row justify-content-between">';
+						htmlStr = htmlStr + '<div class="col-md-4 pt-2">';
+						htmlStr = htmlStr + '<a class="link-edit" href="kategori#edit?id=' + node[i]['category_ID'] + '">' + node[i]['category_name'] + '</a>';
+						htmlStr = htmlStr + '</div>';
+						htmlStr = htmlStr + '<div class="col-md-4">';
+						htmlStr = htmlStr + '<a href="kategori#edit?id=' + node[i]['category_ID'] + '" class="link-edit btn purple-gradient btn-sm"><i class="btn-icon-only icon-pencil"></i> Edit</a> ';
+						htmlStr = htmlStr + '<a href="kategori#hapus?id=' + node[i]['category_ID'] + '" id="hapus_" class="btn peach-gradient btn-sm"><i class="btn-icon-only icon-remove"></i> Hapus</a>';
+						htmlStr = htmlStr + '</div>'
+						htmlStr = htmlStr + '</div>'
+
+						if (node[i]['children']) {
+							printTree(node[i]['children'])
+						}
+
+						htmlStr = htmlStr + '</li>';
+					}
+
+					htmlStr = htmlStr + '</ul>';
+					return htmlStr;
+				}
+
+				tree = unflatten(data.record);
+
+				$('#list-kategori').html(printTree(tree));
+
+
+
+				$('#list-kategori .list-group').sortable({
+					opacity: 0.5,
+					cursor: 'move',
+					placeholder: 'ui-state-highlight',
+					update: function () {
+						var orderAll = [];
+						$('.list-group li').each(function () {
+							orderAll.push($(this).attr('id').replace(/_/g, '[]='));
+						});
+
+						// alert($(this).sortable('serialize'));
+						// exit;
+						$.post('http://' + host + path + '/sortir', orderAll.join('&'));
+					}
+				});
+			}
+		});
+	}
+}
+
+
+function unflatten(array, parent, tree) {
+	tree = typeof tree !== 'undefined' ? tree : [];
+	parent = typeof parent !== 'undefined' ? parent : {
+		category_ID: 0
+	};
+
+	var children = _.filter(array, function (child) {
+		return child.category_parent == parent.category_ID;
+	});
+
+	if (!_.isEmpty(children)) {
+		if (parent.category_ID == 0) {
+			tree = children;
+		} else {
+			parent['children'] = children;
+		}
+		_.each(children, function (child) {
+			unflatten(array, child)
+		});
+	}
+
+	return tree;
 }
 
 function getUrlVars() {

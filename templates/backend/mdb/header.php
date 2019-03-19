@@ -13,6 +13,7 @@
   <!-- Material Design Bootstrap -->
   <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>mdb.min .css" rel="stylesheet">
   <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>mdb.lite.min.css" rel="stylesheet">
+  <!-- jQuery -->
   <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery-3.3.1.min.js"></script>
   <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </head>
@@ -51,7 +52,7 @@
                 <ul>
                   <li><a href="<?php echo set_url('artikel'); ?>" class="waves-effect">Daftar artikel</a></li>
                   <li><a href="<?php echo set_url('artikel#tambah'); ?>" class="waves-effect">Tambah artikel</a></li>
-                  <li><a href="<?php echo set_url('artikel/kategory'); ?>" class="waves-effect">Kategori</a></li>
+                  <li><a href="<?php echo set_url('artikel/kategori'); ?>" class="waves-effect">Kategori</a></li>
                 </ul>
               </div>
             </li>
